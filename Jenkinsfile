@@ -1,15 +1,16 @@
 pipeline {
     agent any
-
     environment {
         DOCKER_IMAGE = 'ci-cd-node-app'
-        REGISTRY = 'jmenzies722'
+        REGISTRY = 'your-dockerhub-username'
     }
-
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/jmenzies722/nodejs-kubernetes-cicd.git'
+                git(
+                    url: 'https://github.com/jmenzies722/nodejs-kubernetes-cicd.git',
+                    credentialsId: 'jmenzies722'
+                )
             }
         }
         stage('Build Docker Image') {
@@ -39,7 +40,6 @@ pipeline {
             }
         }
     }
-
     post {
         always {
             cleanWs()
