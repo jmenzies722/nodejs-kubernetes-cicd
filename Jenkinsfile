@@ -9,7 +9,8 @@ pipeline {
             steps {
                 git(
                     url: 'https://github.com/jmenzies722/nodejs-kubernetes-cicd.git',
-                    credentialsId: 'jmenzies722/******'
+                    credentialsId: 'gh_credentials',
+                    branch: 'main'
                 )
             }
         }
@@ -23,7 +24,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
+                    docker.withRegistry('https://index.docker.io/v1/', 'jmenzies722') {
                         dockerImage.push('latest')
                         dockerImage.push("${env.BUILD_ID}")
                     }
